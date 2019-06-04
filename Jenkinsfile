@@ -18,7 +18,7 @@ stages{
             post {
                 success {
                     echo 'Now Archiving...'
-                    archiveArtifacts artifacts: '**/target/*.war'
+                    archiveArtifacts artifacts: '**/target/dp.war'
                 }
             }
         }
@@ -27,13 +27,13 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        sh "scp -i /home/user/Downloads/pipelinetest.pem **/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat7/webapps"
+                        sh "scp -i /home/jenkins/pipelinetest.pem **/target/dp.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat7/webapps"
                     }
                 }
 
                 stage ("Deploy to Production"){
                     steps {
-                        sh "scp -i /home/user/Downloads/pipelinetest.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
+                        sh "scp -i /home/jenkins/pipelinetest.pem **/target/dp.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
                     }
                 }
             }
