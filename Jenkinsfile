@@ -18,7 +18,7 @@ stages{
             post {
                 success {
                     echo 'Now Archiving...'
-                    archiveArtifacts artifacts: '/var/lib/jenkins/jobs/fullyautomated/builds/11/archive/target/firstdemoproject-1.0-SNAPSHOT.war'
+                    archiveArtifacts artifacts: '/var/lib/jenkins/jobs/fullyautomated/builds/11/archive/target/*.war'
                 }
             }
         }
@@ -27,13 +27,13 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        sh "scp -i /home/jenkins/pipelinetest.pem /var/lib/jenkins/jobs/fullyautomated/builds/11/archive/target/firstdemoproject-1.0-SNAPSHOT.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat7/webapps"
+                        sh "scp -i /home/jenkins/pipelinetest.pem /var/lib/jenkins/jobs/fullyautomated/builds/11/archive/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat7/webapps"
                     }
                 }
 
                 stage ("Deploy to Production"){
                     steps {
-                        sh "scp -i /home/jenkins/pipelinetest.pem /var/lib/jenkins/jobs/fullyautomated/builds/11/archive/target/firstdemoproject-1.0-SNAPSHOT.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
+                        sh "scp -i /home/jenkins/pipelinetest.pem /var/lib/jenkins/jobs/fullyautomated/builds/11/archive/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
                     }
                 }
             }
