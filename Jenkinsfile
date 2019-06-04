@@ -18,7 +18,7 @@ stages{
             post {
                 success {
                     echo 'Now Archiving...'
-                    archiveArtifacts artifacts: '/home/user/Documents/*war'
+                    archiveArtifacts artifacts: '/home/user/Documents/*.war'
                 }
             }
         }
